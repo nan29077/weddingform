@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #24342d;
+  --color-ink-soft: #647168;
+  --color-paper: #ffffff;
+  --color-mist: #f7f7f2;
+  --color-line: #e6e9df;
+  --color-peony: #bb7180;
+  --color-peony-deep: #9e5464;
+  --color-peony-soft: #f8eae9;
+  --color-sage: #738b76;
+  --color-sage-deep: #405d49;
+  --color-sage-soft: #eaf1e9;
+
+  --font-display: "Noto Serif KR", "Nanum Myeongjo", serif;
+  --font-sans: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sage-deep);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* 첫 화면의 단 하나의 연출: QR 스캔 → 휴대폰 화면 등장 */
+@keyframes scan-sweep {
+  0% { top: 4%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 95%; opacity: 0; }
+}
+@keyframes phone-in {
+  from { opacity: 0; transform: translate(24px, 16px) rotate(4deg); }
+  to { opacity: 1; transform: translate(0, 0) rotate(4deg); }
+}
+.scan-line {
+  animation: scan-sweep 1.4s ease-in-out 0.4s 1 both;
+}
+.phone-in {
+  animation: phone-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 1.7s both;
+}
+
+@keyframes hero-copy-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-copy { animation: hero-copy-in 0.5s ease-out both; }
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.story-panel { background: rgba(255, 255, 255, 0.91); backdrop-filter: blur(7px); }
+.story-panel-soft { background: rgba(247, 247, 242, 0.88); backdrop-filter: blur(7px); }
+.story-panel-dark { background: rgba(36, 52, 45, 0.92); backdrop-filter: blur(5px); }
+.story-interlude { background: linear-gradient(90deg, rgba(20, 31, 25, 0.7), rgba(20, 31, 25, 0.14)); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scan-line { animation: none; opacity: 0; }
+  .phone-in { animation: none; transform: rotate(4deg); }
+  .hero-copy { animation: none; }
+  .hero-carousel .transition-opacity { transition: none; }
+  .fixed .transition-opacity { transition: none; }
+}
